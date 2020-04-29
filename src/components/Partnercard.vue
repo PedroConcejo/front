@@ -23,7 +23,7 @@
         color="red"
         text
       >
-        Mostrar
+        Ver
       </v-btn>
 
     </v-card-actions>
