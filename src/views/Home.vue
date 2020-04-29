@@ -4,7 +4,7 @@
 
      <v-row>
      <v-col  offset="3" class="d-flex" cols="12" sm="6">
-        <v-select
+         <v-select
           :items="categories"
           label="Tipo de Sesion"
           name="category"
@@ -20,7 +20,7 @@
          <v-btn class="ma-2" outlined color="black">Buscar</v-btn>
       </v-col>
     </v-row>
-    <Partnerlist :partners="partners"/>
+    <Partnerlist :partners="partners" class="b" />
     <Footer />
   </div>
 </template>
@@ -55,15 +55,20 @@ export default {
       const all = await api.getAllLocations()
       return (this.location = all)
     },
-    async getAllPartners () {
-      const all = await api.getAllPartners()
+    async getAllByStyles () {
+      const all = await api.getAllByStyles()
       return (this.partners = all)
     }
   },
   mounted () {
     this.getAllCategories()
     this.getAllLocations()
-    this.getAllPartners()
+    this.getAllByStyles()
   }
 }
 </script>
+<style>
+.b {
+  margin-bottom: 100px;
+}
+</style>

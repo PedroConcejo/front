@@ -1,24 +1,39 @@
 
 <template>
-     <v-toolbar  dark>
-        <v-btn icon @click="back">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-      <Partnerauth :location="location" />
-      <v-toolbar-title center>Recuerdos</v-toolbar-title>
+<div>
+    <v-card
+    color="grey lighten-4"
+    flat
+    tile
+  >
+    <v-toolbar v-if="isToken" dark>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-toolbar-title>Recuerdos</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <Login />
-      <Signup :location="location" />
-
-      <v-btn icon @click="create">
-        <v-icon>mdi-table-edit</v-icon>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
       <v-btn icon @click="logout">
         <v-icon>mdi-exit-to-app</v-icon>
       </v-btn>
 
     </v-toolbar>
+     <v-toolbar v-else dark>
+      <Partnerauth :location="location" />
+      <v-toolbar-title>Recuerdos</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <Login />
+      <Signup :location="location" />
+    </v-toolbar>
+  </v-card>
+
+     </div>
 </template>
 
 <script>
@@ -35,6 +50,11 @@ export default {
     Partnerauth,
     Login,
     Signup
+  },
+  computed: {
+    isToken: function () {
+      return !!localStorage.getItem('token')
+    }
   },
   methods: {
     logout () {

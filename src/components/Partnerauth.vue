@@ -44,7 +44,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="login">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="login">Login</v-btn>
         </v-card-actions>
       </v-card>
   </v-row></v-card-text>
@@ -86,7 +86,8 @@
                   :items="location"
                   name="location"
                   label="Select a location"
-                  v-model="location"
+                  item-value="_id"
+                  v-model="userlocation"
                   item-text="name"
                 >
                 </v-select>
@@ -146,7 +147,7 @@ export default {
         name: this.username,
         email: this.email,
         password: this.userPassword,
-        location: '5ea82ca9d8684d35fd02926a',
+        location: this.userlocation,
         role: 'partner'
       }
 

@@ -2,7 +2,6 @@
   <v-footer
     dark
     padless
-    absolute
     class="font-weight-medium"
   >
     <v-card
@@ -42,3 +41,8 @@ export default {
   })
 }
 </script>
+<style>
+.footer {
+  margin-top: 100px;
+}
+</style>

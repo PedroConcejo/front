@@ -21,6 +21,28 @@ export default {
   async getAllPartners () {
     const response = await API.get('/partners')
     return response.data
+  },
+  async login (user) {
+    const response = await API.post('/auth/login', {
+      ...user
+    })
+    return response.data
+  },
+  async signup (newUser) {
+    const response = await API.post('/auth/signup', {
+      ...newUser
+    })
+    return response.data
+  },
+  async getPartnerStyles (id) {
+    const response = await API.get(`/partners/${id}/styles`)
+    return response.data
+  },
+  async getAllByStyles (name = '', location = '', style = '') {
+    const response = await API.get(
+      `/partners/styles?name=${name}&location=${location}&style=${style}`
+    )
+    return response.data
   }
 
 }

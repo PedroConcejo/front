@@ -9,12 +9,18 @@ import Partnercard from './Partnercard.vue'
 
 export default {
   name: 'Partnerlist',
+  data () {
+    return {
+      styles: []
+    }
+  },
   props: {
     partners: Array
   },
   components: {
     Partnercard
   }
+
 }
 </script>
 
