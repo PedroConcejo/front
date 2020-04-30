@@ -1,35 +1,29 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn class="ma-2" v-on="on">Signup</v-btn>
-      </template>
       <v-card>
         <v-card-title>
           <span class="headline">User Profile</span>
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Name*" v-model="username"
+            <v-row justify="center">
+              <v-col cols="12"  sm="7" justify="center">
+              <v-avatar color="orange" size="100">
+               <img :src="user.img"
+      >
+               </v-avatar>
+              </v-col>
+              <v-col cols="12" sm="7">
+                <v-text-field label="Name*" v-model="user.name"
             prepend-icon="mdi-account-circle"
             :rules="userRules" required></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-text-field label="Email*"  v-model="email"
+              <v-col cols="12" sm="7">
+                <v-text-field label="Email*"  v-model="user.email"
             :rules="emailRules"
             prepend-icon="mdi-email" required></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-text-field label="Password*"  v-model="userPassword"
-            :type="showPassword ? 'text' : 'password'"
-            prepend-icon="mdi-lock"
-            :rules="passwordRule"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="showPassword = !showPassword" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="7">
                 <v-select
                   prepend-icon="mdi-map-marker"
                   :items="location"
@@ -47,12 +41,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="signup">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="update">Update</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
-  </v-row>
+      </v-row>
 </template>
 
 <script>
@@ -79,19 +71,19 @@ export default {
     }
   },
   props: {
-    location: Array
+    location: Array,
+    user: Object
   },
   methods: {
-    signup () {
-      const newUser = {
-        name: this.username,
-        email: this.email,
-        password: this.userPassword,
+    update () {
+      const updateUser = {
+        name: this.user.name,
+        email: this.user.email,
         location: this.userlocation
       }
-      APIServices.signup(newUser)
+
+      APIServices.updateUser(updateUser)
         .then(response => {
-          localStorage.setItem('token', response.token)
           location.reload()
         })
         .catch(err => console.log(err))

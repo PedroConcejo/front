@@ -8,16 +8,17 @@
           :items="categories"
           label="Tipo de Sesion"
           name="category"
-          v-model="category"
+          v-model="categoryfilter"
           item-text="name"
-        ></v-select> <v-select
+        ></v-select>
+        <v-select
           :items="location"
           label="Ubicacion"
           name="location"
-          v-model="location"
+          v-model="locationfilter"
           item-text="name"
         ></v-select>
-         <v-btn class="ma-2" outlined color="black">Buscar</v-btn>
+         <v-btn class="ma-2" outlined color="black" @click="search">Buscar</v-btn>
       </v-col>
     </v-row>
     <Partnerlist :partners="partners" class="b" />
@@ -38,7 +39,9 @@ export default {
     return {
       categories: null,
       location: null,
-      partners: null
+      partners: null,
+      categoryfilter: '',
+      locationfilter: ''
     }
   },
   components: {
@@ -47,12 +50,20 @@ export default {
     Partnerlist
   },
   methods: {
+    async search () {
+      const location = this.locationfilter === 'Todas las Localizaciones' ? '' : this.locationfilter
+      const style = this.categoryfilter === 'Todos los estilos' ? '' : this.categoryfilter
+      const all = await api.getAllByStyles('', location, style)
+      return (this.partners = all)
+    },
     async getAllCategories () {
       const all = await api.getAllCategories()
+      all.unshift('Todos los estilos')
       return (this.categories = all)
     },
     async getAllLocations () {
       const all = await api.getAllLocations()
+      all.unshift('Todas las Localizaciones')
       return (this.location = all)
     },
     async getAllByStyles () {

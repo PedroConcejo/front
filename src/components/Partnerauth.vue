@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn class="ma-2" outlined color="white" v-on="on" prepend-icon="mdi-briefcase">Empresas</v-btn>
+        <v-btn class="ma-2" v-on="on"> <v-icon>mdi-briefcase</v-icon>Empresas</v-btn>
       </template>
 
        <v-tabs>

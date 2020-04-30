@@ -12,7 +12,7 @@
   </v-carousel>
   <h2>
     {{styles[0].user.name}}
-    <Formulario />
+    <Formulario :location="location" />
   </h2>
 
    <v-tabs v-model="tab">
@@ -68,7 +68,8 @@ export default {
   data () {
     return {
       styles: null,
-      tab: 0
+      tab: 0,
+      location: null
     }
   },
   components: {
@@ -80,10 +81,15 @@ export default {
     async getPartnerStyles () {
       const all = await api.getPartnerStyles(this.$route.params.partnerid)
       return (this.styles = all)
+    },
+    async getAllLocations () {
+      const all = await api.getAllLocations()
+      return (this.location = all)
     }
   },
   mounted () {
     this.getPartnerStyles()
+    this.getAllLocations()
   }
 }
 </script>

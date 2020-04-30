@@ -43,6 +43,59 @@ export default {
       `/partners/styles?name=${name}&location=${location}&style=${style}`
     )
     return response.data
+  },
+  async updateUser (updateUser) {
+    const response = await API.put('/me/profile', {
+      ...updateUser
+    }, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async getMe () {
+    const response = await API.get('/me/profile', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async startRoom (room) {
+    const response = await API.post('/me/rooms', {
+      ...room
+    }, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async getMyRooms () {
+    const response = await API.get('/me/rooms', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async getMessageByRoom (roomid) {
+    const response = await API.get(`/me/rooms/${roomid}/msg`, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async newMsn (roomid, newmsg) {
+    const response = await API.post(`/me/rooms/${roomid}`, {
+      ...newmsg
+    }, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
-
 }
