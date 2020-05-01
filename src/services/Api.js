@@ -97,5 +97,27 @@ export default {
       }
     })
     return response.data
+  },
+  async deleteRoom (roomid) {
+    const response = await API.delete(`/me/rooms/${roomid}`, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async createRating (rating) {
+    const response = await API.post('/me/ratings', {
+      ...rating
+    }, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async getPartnerRatings (id) {
+    const response = await API.get(`/partners/${id}/rating`)
+    return response.data
   }
 }

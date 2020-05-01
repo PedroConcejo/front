@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn class="ma-2" outlined color="red" v-on="on">Contact</v-btn>
+        <v-btn class="ma-2" outlined color="teal lighten-3" v-on="on">Contact</v-btn>
       </template>
       <v-card v-if="isToken">
           <v-card-title>
@@ -157,6 +157,22 @@ export default {
                 .then(response => { this.dialog = false })
                 .catch(err => console.log(err))
             })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    },
+    send () {
+      const room = {
+        subject: this.subject,
+        partner: this.$route.params.partnerid
+      }
+      Api.startRoom(room)
+        .then(response => {
+          const mensaje = {
+            msg: this.formulario
+          }
+          Api.newMsn(response._id, mensaje)
+            .then(response => { this.dialog = false })
             .catch(err => console.log(err))
         })
         .catch(err => console.log(err))

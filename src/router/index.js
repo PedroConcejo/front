@@ -20,7 +20,14 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    beforeEnter (to, from, next) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Auth'
+        })
+      } else { next() }
+    }
   }
 ]
 

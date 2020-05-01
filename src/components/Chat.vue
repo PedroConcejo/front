@@ -29,8 +29,10 @@
           <v-container>
             <v-layout align-center justify-center>
               <v-flex>
-                <v-card class="elevation-12" color="grey lighten-3">
-                  <v-toolbar dark color="grey lighten-1">
+                <v-card class="elevation-12" color="teal lighten-5
+">
+                  <v-toolbar dark color="teal lighten-3
+">
                     <v-toolbar-title>Chat</v-toolbar-title>
                     <v-btn icon @click="chatdelete">
                       <v-icon>mdi-delete</v-icon>
@@ -57,7 +59,7 @@
                         fab
                         dark
                         small
-                        color="grey lighten-1"
+                        color="teal lighten-3"
                         @click="send"
                       >
                         Send
@@ -134,6 +136,11 @@ export default {
           this.newmsg = ''
         })
         .catch(err => console.log(err))
+    },
+    chatdelete () {
+      Api.deleteRoom(this.roomid).then(res => {
+        location.reload()
+      })
     }
   },
   mounted () {

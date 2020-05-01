@@ -1,16 +1,18 @@
 <template>
   <v-footer
-    dark
+
     padless
     class="font-weight-medium"
   >
     <v-card
+    color="teal lighten-3
+"
       class="flex"
       flat
       tile
     >
-      <v-card-title>
-        <strong class="subheading">Get connected with us on social networks!</strong>
+      <v-card-title class="brand">
+        <strong>Get connected with us on social networks!</strong>
         <v-spacer></v-spacer>
         {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
         <v-spacer></v-spacer>
@@ -45,4 +47,8 @@ export default {
 .footer {
   margin-top: 100px;
 }
+.brand {
+    color: #eceff1;
+    font-family: "Quicksand", sans-serif;
+  }
 </style>

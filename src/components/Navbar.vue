@@ -1,42 +1,58 @@
 <template>
   <div>
     <v-row>
-    <v-col>
-    <v-card color="grey lighten-4" flat tile>
-      <v-toolbar v-if="isToken" dark>
-      <v-col cols='1'>
-        <v-btn icon @click="home">
-          <v-icon>mdi-camera</v-icon>
-        </v-btn>
-</v-col>
-<v-col cols='2'>
-        <v-toolbar-title>Recuerdos</v-toolbar-title>
-        </v-col>
-<v-col cols='2' offset='7'>
+      <v-col>
+        <v-card flat tile class="transparent">
+          <v-toolbar
+            v-if="isToken"
+            color="teal lighten-3"
+          >
+            <v-col>
+              <v-btn icon color="#ECEFF1" @click="back">
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-toolbar-title class="brand font-weight-black text-center" to="/"
+                >Recuerdos</v-toolbar-title
+              >
+            </v-col>
+            <v-col class="text-end">
+              <v-btn icon color="#ECEFF1">
+                <v-icon>mdi-email</v-icon>
+              </v-btn>
 
-        <v-btn icon>
-          <v-icon>mdi-email</v-icon>
-        </v-btn>
+              <v-btn icon color="#ECEFF1" @click="profile">
+                <v-icon>mdi-account</v-icon>
+              </v-btn>
 
-        <v-btn icon @click="profile">
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
-
-        <v-btn icon @click="logout">
-          <v-icon>mdi-exit-to-app</v-icon>
-        </v-btn>
-        </v-col>
-
-      </v-toolbar>
-      <v-toolbar v-else dark>
-        <Partnerauth :location="location" />
-        <v-toolbar-title>Recuerdos</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <Login />
-        <Signup :location="location" />
-      </v-toolbar>
-    </v-card>
-    </v-col>
+              <v-btn icon color="#ECEFF1" @click="logout">
+                <v-icon>mdi-exit-to-app</v-icon>
+              </v-btn>
+            </v-col>
+          </v-toolbar>
+          <v-toolbar
+            v-else
+            color="teal lighten-3"
+          >
+            <v-col>
+              <Partnerauth :location="location" />
+            </v-col>
+            <v-col>
+              <v-toolbar-title class="brand font-weight-black text-center" to="/">
+                Recuerdos</v-toolbar-title
+              >
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col>
+              <Login />
+            </v-col>
+            <v-col>
+              <Signup :location="location" />
+            </v-col>
+          </v-toolbar>
+        </v-card>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -78,3 +94,25 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+* {
+  text-decoration-line: none;
+  .brand {
+    color: #eceff1;
+    font-family: "Quicksand", sans-serif;
+  }
+}
+.max {
+  width: auto !important;
+}
+.transparent {
+  background-color: !important;
+}
+.v-navigation-drawer {
+  width: 70% !important;
+}
+v-btn {
+  color: #eceff1;
+}
+</style>
