@@ -77,7 +77,7 @@ export default {
       styles: null,
       tab: 0,
       location: null,
-      ratings: null
+      ratings: []
     }
   },
   components: {
@@ -100,24 +100,13 @@ export default {
       return (finalRating / arr.length)
     }
   },
-  methods: {
-    async getPartnerStyles () {
-      const all = await api.getPartnerStyles(this.$route.params.partnerid)
-      return (this.styles = all)
-    },
-    async getAllLocations () {
-      const all = await api.getAllLocations()
-      return (this.location = all)
-    },
-    async getPartnerRatings () {
-      const all = await api.getPartnerRatings(this.$route.params.partnerid)
-      return (this.ratings = all)
-    }
-  },
-  mounted () {
-    this.getPartnerStyles()
-    this.getAllLocations()
-    this.getPartnerRatings()
+  async created () {
+    console.log(this.$route.params.partnerid)
+    this.styles = await api.getPartnerStyles(this.$route.params.partnerid)
+    this.location = await api.getAllLocations()
+    this.ratings = await api.getPartnerRatings(this.$route.params.partnerid)
   }
+
 }
+
 </script>

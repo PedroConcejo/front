@@ -119,5 +119,21 @@ export default {
   async getPartnerRatings (id) {
     const response = await API.get(`/partners/${id}/rating`)
     return response.data
+  },
+  async getMyRating (id) {
+    const response = await API.get('/me/ratings', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async deleteRating (ratingid) {
+    const response = await API.delete(`/me/ratings/${ratingid}`, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }

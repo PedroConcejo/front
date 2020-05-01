@@ -73,7 +73,7 @@
             prepend-icon="mdi-email" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Password*"  v-model="userPassword"
+                <v-text-field label="Password*"  v-model="password"
             :type="showPassword ? 'text' : 'password'"
             prepend-icon="mdi-lock"
             :rules="passwordRule"
@@ -92,12 +92,6 @@
                 >
                 </v-select>
               </v-col>
-              <select v-model="selected" label="Location*"
-                  prepend-icon="mdi-map-marker"
-                  required>
-                <option disabled value="">Seleccione un elemento</option>
-                <option v-for="(nota, idx) in location" :key="idx"> {{ nota.name }}</option>
-              </select>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -124,7 +118,7 @@ export default {
       userlocation: '',
       dialog: false,
       showPassword: false,
-      userPassword: '',
+      password: '',
       passwordRule: [
         v => !!v || 'Password is required',
         v => v.length >= 6 || 'Password must be more than 6 characters'
@@ -146,7 +140,7 @@ export default {
       const newUser = {
         name: this.username,
         email: this.email,
-        password: this.userPassword,
+        password: this.password,
         location: this.userlocation,
         role: 'partner'
       }
@@ -154,7 +148,7 @@ export default {
       APIServices.signup(newUser)
         .then(response => {
           localStorage.setItem('token', response.token)
-          this.$router.push('/home')
+          this.$router.push('/')
         })
         .catch(err => console.log(err))
     },
@@ -170,7 +164,7 @@ export default {
             console.log(response.error)
           } else {
             localStorage.setItem('token', response.token)
-            this.$router.push('/home')
+            this.$router.push('/')
           }
         })
         .catch(err => console.log(err))

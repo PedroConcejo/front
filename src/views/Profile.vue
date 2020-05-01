@@ -10,6 +10,7 @@
                 v-for="(item, i) in items"
                 :key="i"
                 @click="item.click"
+                shaped
               >
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
@@ -30,7 +31,7 @@
         <Chat />
       </v-col>
       <v-col v-if="rating" cols="4" offset="1">
-        Rating
+        <Rating />
       </v-col>
     </v-row>
   </div>
@@ -40,6 +41,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Account from '@/components/Account.vue'
 import Chat from '@/components/Chat.vue'
+import Rating from '@/components/Myratings.vue'
 import api from '../services/Api'
 
 export default {
@@ -77,13 +79,14 @@ export default {
           }
         }
       ],
-      model: 1
+      model: 0
     }
   },
   components: {
     Navbar,
     Account,
-    Chat
+    Chat,
+    Rating
   },
   methods: {
     async getAllLocations () {

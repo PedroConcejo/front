@@ -110,7 +110,7 @@ export default {
       dialog: false,
       showPassword: false,
       userPassword: '',
-      user: null,
+      user: {},
       passwordRule: [
         v => !!v || 'Password is required',
         v => v.length >= 6 || 'Password must be more than 6 characters'
@@ -176,16 +176,12 @@ export default {
             .catch(err => console.log(err))
         })
         .catch(err => console.log(err))
-    },
-    async getMe () {
-      if (this.isToken) {
-        const user = await Api.getMe()
-        return (this.user = user)
-      }
     }
   },
-  mounted () {
-    this.getMe()
+  async created () {
+    if (localStorage.getItem('token')) {
+      this.user = await Api.getMe()
+    }
   }
 }
 </script>

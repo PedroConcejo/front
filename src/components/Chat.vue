@@ -41,7 +41,9 @@
                   <v-card-text>
                     <v-list ref="chat" id="logs">
                       <template v-for="(item, index) in msg">
-                        <v-subheader v-if="item" :key="index">{{
+                        <v-subheader v-if="item" :key="index">
+                          <strong class='mr-3'>{{item.user.name}}:
+                            </strong>{{
                           item.msg
                         }}</v-subheader>
                       </template>
@@ -113,7 +115,7 @@ export default {
           }
         }
       ],
-      model: 1
+      model: 0
     }
   },
   methods: {
