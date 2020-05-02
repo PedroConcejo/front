@@ -135,5 +135,24 @@ export default {
       }
     })
     return response.data
+  },
+  async partnerControl () {
+    const response = await API.get('/rolecontrol', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async createStyle (newStyle) {
+    const response = await API.post('/me/styles', {
+      ...newStyle
+    },
+    {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }

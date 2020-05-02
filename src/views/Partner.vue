@@ -68,15 +68,15 @@ import Navbar from '@/components/Navbar.vue'
 import Formulario from '@/components/Formulario.vue'
 import Addrating from '@/components/Addrating.vue'
 import Showrating from '@/components/Showrating.vue'
-import api from '../services/Api'
+import Api from '../services/Api'
 
 export default {
   name: 'Partner',
   data () {
     return {
-      styles: null,
+      styles: [],
       tab: 0,
-      location: null,
+      location: [],
       ratings: []
     }
   },
@@ -101,10 +101,9 @@ export default {
     }
   },
   async created () {
-    console.log(this.$route.params.partnerid)
-    this.styles = await api.getPartnerStyles(this.$route.params.partnerid)
-    this.location = await api.getAllLocations()
-    this.ratings = await api.getPartnerRatings(this.$route.params.partnerid)
+    this.styles = await Api.getPartnerStyles(this.$route.params.partnerid)
+    this.location = await Api.getAllLocations()
+    this.ratings = await Api.getPartnerRatings(this.$route.params.partnerid)
   }
 
 }

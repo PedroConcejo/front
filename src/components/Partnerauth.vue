@@ -63,7 +63,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="4">
-                <v-text-field label="Name*" v-model="username"
+                <v-text-field label="Business Name*" v-model="username"
             prepend-icon="mdi-account-circle"
             :rules="userRules" required></v-text-field>
               </v-col>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import APIServices from '../services/Api'
+import Api from '../services/Api'
 
 export default {
   data () {
@@ -145,10 +145,11 @@ export default {
         role: 'partner'
       }
 
-      APIServices.signup(newUser)
+      Api.signup(newUser)
         .then(response => {
           localStorage.setItem('token', response.token)
-          this.$router.push('/')
+          this.dialog = false
+          this.$router.push('/business')
         })
         .catch(err => console.log(err))
     },
@@ -158,13 +159,14 @@ export default {
         password: this.password
       }
 
-      APIServices.login(user)
+      Api.login(user)
         .then(response => {
           if (response.error) {
             console.log(response.error)
           } else {
             localStorage.setItem('token', response.token)
-            this.$router.push('/')
+            this.dialog = false
+            this.$router.push('/business')
           }
         })
         .catch(err => console.log(err))

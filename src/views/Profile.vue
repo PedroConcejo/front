@@ -42,7 +42,7 @@ import Navbar from '@/components/Navbar.vue'
 import Account from '@/components/Account.vue'
 import Chat from '@/components/Chat.vue'
 import Rating from '@/components/Myratings.vue'
-import api from '../services/Api'
+import Api from '../services/Api'
 
 export default {
   name: 'Profile',
@@ -52,7 +52,7 @@ export default {
       message: false,
       rating: false,
       location: null,
-      user: null,
+      user: {},
       items: [
         {
           icon: 'mdi-account-settings',
@@ -88,19 +88,9 @@ export default {
     Chat,
     Rating
   },
-  methods: {
-    async getAllLocations () {
-      const all = await api.getAllLocations()
-      return (this.location = all)
-    },
-    async getMe () {
-      const user = await api.getMe()
-      return (this.user = user)
-    }
-  },
-  mounted () {
-    this.getAllLocations()
-    this.getMe()
+  async created () {
+    this.location = await Api.getAllLocations()
+    this.user = await Api.getMe()
   }
 }
 </script>
