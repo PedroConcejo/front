@@ -166,7 +166,7 @@ export default {
           } else {
             localStorage.setItem('token', response.token)
             this.dialog = false
-            this.$router.push('/business')
+            this.$router.push('/business/styles')
           }
         })
         .catch(err => console.log(err))

@@ -154,5 +154,21 @@ export default {
       }
     })
     return response.data
+  },
+  async getMystyles () {
+    const response = await API.get('/me/styles', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async getStyle (styleid) {
+    const response = await API.get(`/me/styles/${styleid}`, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }
