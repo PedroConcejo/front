@@ -1,6 +1,5 @@
 <template>
   <v-footer
-
     padless
     class="font-weight-medium"
   >

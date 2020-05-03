@@ -11,10 +11,15 @@
               <v-btn icon color="#ECEFF1" @click="back">
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
+              <v-btn icon color="#ECEFF1" href="/">
+                <v-icon>mdi-home</v-icon>
+              </v-btn>
             </v-col>
             <v-col>
-              <v-toolbar-title class="brand font-weight-black text-center" to="/"
-                >Recuerdos</v-toolbar-title
+              <v-toolbar-title>
+                <v-btn href="/" text class="brand font-weight-black text-center">
+Recuerdos
+</v-btn></v-toolbar-title
               >
             </v-col>
             <v-col class="text-end">

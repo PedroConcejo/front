@@ -39,6 +39,7 @@
           name="category"
           v-model="categoryfilter"
           item-text="name"
+          item-value="_id"
           color="teal"
         ></v-select>
       </v-col>

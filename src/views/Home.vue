@@ -2,31 +2,14 @@
   <div class="home">
     <Navbar :location="location" />
     <v-row>
-      <v-col offset="3" class="d-flex" cols="12" sm="6">
-        <v-select
-        outlined
-          :items="categories"
-          label="Tipo de Sesion"
-          name="category"
-          v-model="categoryfilter"
-          item-text="name"
-          color='teal'
-        ></v-select>
-        <v-select
-        outlined
-          :items="location"
-          label="Ubicacion"
-          name="location"
-          v-model="locationfilter"
-          item-text="name"
-          color='teal'
-        ></v-select>
-        <v-btn class="ma-2" outlined color="teal" @click="search"
-          >Buscar</v-btn
-        >
+<v-col cols='3'>
+        <Vertical :categories="categories" :location="location" v-on:search='search'/>
+      </v-col>
+      <v-col cols="9" class="d-flex flex-wrap mx-auto">
+    <Partnerlist :partners="partners" class="b" />
+
       </v-col>
     </v-row>
-    <Partnerlist :partners="partners" class="b" />
   </div>
 </template>
 
@@ -35,6 +18,7 @@
 import api from '../services/Api'
 import Navbar from '@/components/Navbar.vue'
 import Partnerlist from '@/components/Partnerlist.vue'
+import Vertical from '@/components/Verticalsearchbar.vue'
 
 export default {
   name: 'Home',
@@ -49,17 +33,18 @@ export default {
   },
   components: {
     Navbar,
-    Partnerlist
+    Partnerlist,
+    Vertical
   },
   methods: {
-    async search () {
+    async search (user, categoryfilter, locationfilter) {
       const location =
-        this.locationfilter === 'Todas las Localizaciones'
+        locationfilter === 'Todas las Localizaciones'
           ? ''
-          : this.locationfilter
+          : locationfilter
       const style =
-        this.categoryfilter === 'Todos los estilos' ? '' : this.categoryfilter
-      const all = await api.getAllByStyles('', location, style)
+        categoryfilter === 'Todos los estilos' ? '' : categoryfilter
+      const all = await api.getAllByStyles(user, location, style)
       return (this.partners = all)
     },
     async getAllCategories () {

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto mt-10" max-width="400" elevation="9">
+  <v-card class="mr-10 mt-10" max-width="400" elevation="9">
     <v-carousel :show-arrows="false">
       <v-carousel-item
         v-for="(img, idx) in partner.img"
