@@ -1,92 +1,100 @@
 <template>
   <div cols="12" sm="8" md="7" lg="5">
     <Navbar />
-    <v-row>
-      <v-col cols="3">
-        <v-card class="mx-auto" max-width="400">
-          <v-list>
-            <v-list-item-group v-model="model" mandatory color="indigo">
-              <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                @click="item.click"
-                shaped
-              >
-                <v-list-item-icon>
-                  <v-icon v-text="item.icon"></v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.text"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
-      </v-col>
-      <v-col v-if="profile" cols="4" offset="1">
-        <Account :location="location" :user="user" />
-      </v-col>
-      <v-col v-if="message" cols="8">
-        <Chat />
-      </v-col>
-      <v-col v-if="rating" cols="4" offset="1">
-        <Rating />
-      </v-col>
-    </v-row>
+    <v-row justify="center">
+      <v-card>
+        <v-card-title>
+          <span class="headline">User Profile</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row justify="center">
+              <v-col cols="12"  sm="7" justify="center">
+              <v-avatar color="orange" size="100">
+               <img :src="user.img"
+      >
+               </v-avatar>
+              </v-col>
+              <v-col cols="12" sm="7">
+                <v-text-field label="Name*" v-model="user.name"
+            prepend-icon="mdi-account-circle"
+            :rules="userRules" required></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="7">
+                <v-text-field label="Email*"  v-model="user.email"
+            :rules="emailRules"
+            prepend-icon="mdi-email" required></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="7">
+                <v-select
+                  prepend-icon="mdi-map-marker"
+                  :items="location"
+                  name="location"
+                  label="Select a location"
+                  item-value="_id"
+                  v-model="userlocation"
+                  item-text="name"
+                >
+                </v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="update">Update</v-btn>
+        </v-card-actions>
+      </v-card>
+      </v-row>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-import Account from '@/components/Account.vue'
-import Chat from '@/components/Chat.vue'
-import Rating from '@/components/Myratings.vue'
 import Api from '../services/Api'
 
 export default {
   name: 'Profile',
   data () {
     return {
-      profile: true,
-      message: false,
-      rating: false,
       location: null,
       user: {},
-      items: [
-        {
-          icon: 'mdi-account-settings',
-          text: 'Profile',
-          click: () => {
-            this.message = this.rating = false
-            this.profile = true
-          }
-        },
-        {
-          icon: 'mdi-email',
-          text: 'Message',
-          click: () => {
-            this.profile = this.rating = false
-            this.message = true
-          }
-        },
-        {
-          icon: 'mdi-star',
-          text: 'Rating',
-          click: () => {
-            this.message = this.profile = false
-            this.rating = true
-          }
-        }
+      userlocation: '',
+      dialog: false,
+      showPassword: false,
+      userPassword: '',
+      passwordRule: [
+        v => !!v || 'Password is required',
+        v => v.length >= 6 || 'Password must be more than 6 characters'
       ],
-      model: 0
+      username: '',
+      userRules: [v => !!v || 'Username is required'],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+      ]
+
     }
   },
   components: {
-    Navbar,
-    Account,
-    Chat,
-    Rating
+    Navbar
+  },
+  methods: {
+    update () {
+      const updateUser = {
+        name: this.user.name,
+        email: this.user.email,
+        location: this.userlocation
+      }
+
+      Api.updateUser(updateUser)
+        .then(response => {
+          location.reload()
+        })
+        .catch(err => console.log(err))
+    }
   },
   async created () {
     this.location = await Api.getAllLocations()
