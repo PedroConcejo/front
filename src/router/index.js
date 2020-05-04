@@ -9,8 +9,6 @@ import Business from '../views/Business.vue'
 import BusinessStyles from '../views/Showstyles.vue'
 import StylesById from '../views/StylesById.vue'
 
-import Api from '../services/Api'
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -65,7 +63,12 @@ const routes = [
     name: 'Business',
     component: Business,
     beforeEnter (to, from, next) {
-      if (Api.partnerControl() === null) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      }
+      if (localStorage.getItem('role') !== 'partner') {
         next({
           name: 'Home'
         })
@@ -81,6 +84,11 @@ const routes = [
         next({
           name: 'Home'
         })
+      }
+      if (localStorage.getItem('role') !== 'partner') {
+        next({
+          name: 'Home'
+        })
       } else { next() }
     }
   },
@@ -90,6 +98,11 @@ const routes = [
     component: StylesById,
     beforeEnter (to, from, next) {
       if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      }
+      if (localStorage.getItem('role') !== 'partner') {
         next({
           name: 'Home'
         })

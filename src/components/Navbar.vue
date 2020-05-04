@@ -46,7 +46,7 @@ Recuerdos
             </v-col>
           </v-toolbar>
           <v-toolbar
-            v-else
+            v-if="!isToken"
             color="teal lighten-3"
           >
             <v-col>
@@ -93,7 +93,9 @@ export default {
       return !!localStorage.getItem('token')
     },
     isPartner: function () {
-      return localStorage.getItem('role') ? 'partner' : 'user'
+      if (localStorage.getItem('role') === 'partner') {
+        return true
+      } else { return false }
     }
   },
   methods: {

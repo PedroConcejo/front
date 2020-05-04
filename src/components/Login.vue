@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn class="ma-2" block outlined rounded color="#ECEFF1" v-on="on">Iniciar Sesion</v-btn>
+        <v-btn class="ma-2" outlined rounded color="#ECEFF1" v-on="on">Iniciar Sesion</v-btn>
 
       </template>
       <v-card>

@@ -29,6 +29,19 @@
       <v-btn outlined color="teal" text @click="ver(partner.user._id)">
         Ver
       </v-btn>
+      <div @click='addfav(partner.user._id)'>
+       <v-rating
+      v-model="fav"
+      length="1"
+      empty-icon="mdi-heart-outline"
+      full-icon="mdi-heart"
+      hover
+      clearable
+      size="40"
+      color="red"
+      background-color="red lighten-2"
+    ></v-rating>
+          </div>
     </v-card-actions>
   </v-card>
 </template>
@@ -39,15 +52,35 @@ import Api from '../services/Api'
 export default {
   data () {
     return {
-      rate: 0
+      rate: 0,
+      favorites: [],
+      fav: 0
+
     }
   },
   props: {
     partner: Object
   },
+  computed: {
+
+  },
   methods: {
     ver (id) {
       this.$router.push(`/partners/${id}`)
+    },
+    addfav (id) {
+      const fav = {
+        favorites: id
+      }
+      if (this.fav === 1) {
+        Api.addFav(fav)
+          .then(response => {})
+          .catch(err => console.log(err))
+      } else {
+        Api.removeFav(id)
+          .then(response => {})
+          .catch(err => console.log(err))
+      }
     }
   },
   async created () {
@@ -56,6 +89,14 @@ export default {
       this.rate = ratings.reduce((prev, cur) => {
         return prev + cur.rate
       }, 0) / ratings.length
+    }
+    this.favorites = await Api.getMyFav()
+    for (var i = 0; i < this.favorites.length; i++) {
+      if (this.favorites[i] === this.partner.user._id) {
+        this.fav = 1
+      } else {
+        this.fav = 0
+      }
     }
   }
 }

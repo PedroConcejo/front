@@ -189,5 +189,32 @@ export default {
       }
     })
     return response.data
+  },
+  async addFav (fav) {
+    const response = await API.post('/me/favorites', {
+      ...fav
+    }, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async removeFav (favid) {
+    const response = await API.put(`/me/favorites/${favid}`, {},
+      {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+    return response.data
+  },
+  async getMyFav () {
+    const response = await API.get('/me/favorites', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }
