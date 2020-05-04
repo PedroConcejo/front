@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Partner from '../views/Partner.vue'
 import Profile from '../views/Profile.vue'
+import Messages from '../views/Messages.vue'
+import Ratings from '../views/Ratings.vue'
 import Business from '../views/Business.vue'
 import BusinessStyles from '../views/Showstyles.vue'
 import StylesById from '../views/StylesById.vue'
@@ -26,6 +28,30 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    beforeEnter (to, from, next) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      } else { next() }
+    }
+  },
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: Messages,
+    beforeEnter (to, from, next) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      } else { next() }
+    }
+  },
+  {
+    path: '/ratings',
+    name: 'Ratings',
+    component: Ratings,
     beforeEnter (to, from, next) {
       if (!localStorage.getItem('token')) {
         next({

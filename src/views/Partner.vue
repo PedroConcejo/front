@@ -77,7 +77,9 @@ export default {
       styles: [],
       tab: 0,
       location: [],
+      rate: 0,
       ratings: []
+
     }
   },
   components: {
@@ -86,24 +88,15 @@ export default {
     Addrating,
     Showrating
   },
-  computed: {
-    rate: function () {
-      var arr = this.ratings
-      var res = []
-      for (let i = 0; i < arr.length; i++) {
-        res.push(arr[i].rate)
-      }
-      const finalRating = res.reduce((prev, curr) => {
-        return prev + curr
-      }, 0)
-
-      return (finalRating / arr.length)
-    }
-  },
   async created () {
     this.styles = await Api.getPartnerStyles(this.$route.params.partnerid)
     this.location = await Api.getAllLocations()
     this.ratings = await Api.getPartnerRatings(this.$route.params.partnerid)
+    if (this.ratings.length !== 0) {
+      this.rate = this.ratings.reduce((prev, cur) => {
+        return prev + cur.rate
+      }, 0) / this.ratings.length
+    }
   }
 
 }

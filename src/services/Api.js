@@ -170,5 +170,24 @@ export default {
       }
     })
     return response.data
+  },
+  async deleteStyle (styleid) {
+    const response = await API.delete(`/me/styles/${styleid}`, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async updateStyle (updateStyle, styleid) {
+    const response = await API.put(`/me/styles/${styleid}`, {
+      ...updateStyle
+    },
+    {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }

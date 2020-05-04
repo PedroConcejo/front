@@ -11,6 +11,9 @@
               <v-btn icon color="#ECEFF1" @click="back">
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
+              <v-btn v-if="isPartner" icon color="#ECEFF1" href="/business/styles">
+                <v-icon>mdi-briefcase</v-icon>
+              </v-btn>
               <v-btn icon color="#ECEFF1" href="/">
                 <v-icon>mdi-home</v-icon>
               </v-btn>
@@ -23,11 +26,17 @@ Recuerdos
               >
             </v-col>
             <v-col class="text-end">
-              <v-btn icon color="#ECEFF1">
+               <v-btn icon color="#ECEFF1">
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+              <v-btn icon color="#ECEFF1"  href="/ratings">
+                <v-icon>mdi-star</v-icon>
+              </v-btn>
+              <v-btn icon color="#ECEFF1"  href="/messages">
                 <v-icon>mdi-email</v-icon>
               </v-btn>
 
-              <v-btn icon color="#ECEFF1" @click="profile">
+              <v-btn icon color="#ECEFF1" href="/profile">
                 <v-icon>mdi-account</v-icon>
               </v-btn>
 
@@ -44,8 +53,10 @@ Recuerdos
               <Partnerauth :location="location" />
             </v-col>
             <v-col>
-              <v-toolbar-title class="brand font-weight-black text-center" to="/">
-                Recuerdos</v-toolbar-title
+              <v-toolbar-title>
+                 <v-btn href="/" text class="brand font-weight-black text-center">
+Recuerdos
+</v-btn></v-toolbar-title
               >
             </v-col>
             <v-spacer></v-spacer>
@@ -80,18 +91,15 @@ export default {
   computed: {
     isToken: function () {
       return !!localStorage.getItem('token')
+    },
+    isPartner: function () {
+      return localStorage.getItem('role') ? 'partner' : 'user'
     }
   },
   methods: {
     logout () {
       localStorage.clear()
       location.reload()
-    },
-    profile () {
-      this.$router.push('/profile')
-    },
-    home () {
-      this.$router.push('/')
     },
     back () {
       this.$router.go(-1)

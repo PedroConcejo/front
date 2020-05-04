@@ -28,6 +28,9 @@
             {{ style.category.name }} <v-btn icon color="#ECEFF1" @click='edit(style._id)'>
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
+              <v-btn icon color="#ECEFF1" @click.stop.prevent="dialog = true">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
@@ -55,6 +58,17 @@
                 {{ style.price_min }} to {{ style.price_max }}
               </v-card-text>
             </v-card>
+      <v-row justify="center">
+          <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="title font-weight-regular d-flex justify-center">Eliminar</v-card-title>
+              <v-card-actions class="d-flex justify-center">
+                <v-btn text @click="dialog = false">No</v-btn>
+                <v-btn text @click="eliminar(style._id)">Si</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -70,6 +84,7 @@ export default {
   name: 'Partner',
   data () {
     return {
+      dialog: false,
       styles: [],
       tab: 0,
       location: [],
@@ -96,6 +111,9 @@ export default {
   methods: {
     edit (id) {
       this.$router.push(`/business/styles/${id}`)
+    },
+    eliminar (id) {
+      alert(id)
     }
   },
   async created () {

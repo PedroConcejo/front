@@ -10,7 +10,15 @@
       ></v-carousel-item>
     </v-carousel>
 
-    <v-card-title class="headline mb-1">{{ partner.user.name }}</v-card-title>
+    <v-card-title class="headline mb-1">{{ partner.user.name }}
+    </v-card-title>
+         <v-rating
+            v-model="rate"
+            background-color="orange lighten-3"
+            color="orange"
+            readonly
+            half-increments
+          ></v-rating>
 
     <v-card-text class="text--primary">
       <div>{{ partner.category.name }}</div>
@@ -26,13 +34,28 @@
 </template>
 
 <script>
+import Api from '../services/Api'
+
 export default {
+  data () {
+    return {
+      rate: 0
+    }
+  },
   props: {
     partner: Object
   },
   methods: {
     ver (id) {
       this.$router.push(`/partners/${id}`)
+    }
+  },
+  async created () {
+    const ratings = await Api.getPartnerRatings(this.partner.user._id)
+    if (ratings.length !== 0) {
+      this.rate = ratings.reduce((prev, cur) => {
+        return prev + cur.rate
+      }, 0) / ratings.length
     }
   }
 }
