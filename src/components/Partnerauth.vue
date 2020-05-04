@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn  class="ma-2" block outlined rounded color="#ECEFF1" v-on="on"> <v-icon>mdi-briefcase</v-icon>Empresas</v-btn>
+        <v-btn  class="ma-2" icon color="#ECEFF1" v-on="on"> <v-icon>mdi-briefcase</v-icon></v-btn>
       </template>
 
        <v-tabs>
@@ -148,6 +148,7 @@ export default {
       Api.signup(newUser)
         .then(response => {
           localStorage.setItem('token', response.token)
+          localStorage.setItem('role', response.role)
           this.dialog = false
           this.$router.push('/business')
         })
@@ -165,6 +166,7 @@ export default {
             console.log(response.error)
           } else {
             localStorage.setItem('token', response.token)
+            localStorage.setItem('role', response.role)
             this.dialog = false
             this.$router.push('/business/styles')
           }

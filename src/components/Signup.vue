@@ -92,6 +92,7 @@ export default {
       APIServices.signup(newUser)
         .then(response => {
           localStorage.setItem('token', response.token)
+          localStorage.setItem('role', response.role)
           location.reload()
         })
         .catch(err => console.log(err))

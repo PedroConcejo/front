@@ -82,6 +82,7 @@ export default {
             console.log(response.error)
           } else {
             localStorage.setItem('token', response.token)
+            localStorage.setItem('role', response.role)
             location.reload()
           }
         })
