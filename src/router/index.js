@@ -8,6 +8,7 @@ import Ratings from '../views/Ratings.vue'
 import Business from '../views/Business.vue'
 import BusinessStyles from '../views/Showstyles.vue'
 import StylesById from '../views/StylesById.vue'
+import Favorites from '../views/Favorites.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,18 @@ const routes = [
     path: '/messages',
     name: 'Messages',
     component: Messages,
+    beforeEnter (to, from, next) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      } else { next() }
+    }
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: Favorites,
     beforeEnter (to, from, next) {
       if (!localStorage.getItem('token')) {
         next({

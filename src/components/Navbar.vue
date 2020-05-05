@@ -26,13 +26,13 @@ Recuerdos
               >
             </v-col>
             <v-col class="text-end">
-               <v-btn icon color="#ECEFF1">
+               <v-btn icon color="#ECEFF1"  href="/favorites">
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
-              <v-btn icon color="#ECEFF1"  href="/ratings">
+              <v-btn icon color="#ECEFF1" href="/ratings">
                 <v-icon>mdi-star</v-icon>
               </v-btn>
-              <v-btn icon color="#ECEFF1"  href="/messages">
+              <v-btn icon color="#ECEFF1" href="/messages">
                 <v-icon>mdi-email</v-icon>
               </v-btn>
 

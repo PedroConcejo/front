@@ -216,5 +216,13 @@ export default {
       }
     })
     return response.data
+  },
+  async getMyFavDisplay () {
+    const response = await API.get('/me/favorites/all', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }

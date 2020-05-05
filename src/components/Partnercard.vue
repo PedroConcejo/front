@@ -29,7 +29,7 @@
       <v-btn outlined color="teal" text @click="ver(partner.user._id)">
         Ver
       </v-btn>
-      <div @click='addfav(partner.user._id)'>
+      <div @click='addfav(partner._id)'>
        <v-rating
       v-model="fav"
       length="1"
@@ -91,12 +91,10 @@ export default {
       }, 0) / ratings.length
     }
     this.favorites = await Api.getMyFav()
-    for (var i = 0; i < this.favorites.length; i++) {
-      if (this.favorites[i] === this.partner.user._id) {
-        this.fav = 1
-      } else {
-        this.fav = 0
-      }
+    if (this.favorites.includes(this.partner._id)) {
+      this.fav = 1
+    } else {
+      this.fav = 0
     }
   }
 }
