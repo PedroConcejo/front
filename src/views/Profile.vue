@@ -13,7 +13,8 @@
               <v-avatar color="orange" size="100">
                <img :src="user.img"
       >
-               </v-avatar>
+               </v-avatar> <v-spacer></v-spacer>
+                <input class="my-2" type="file"  multiple @change="onFileSelected">
               </v-col>
               <v-col cols="12" sm="7">
                 <v-text-field label="Name*" v-model="user.name"
@@ -52,6 +53,7 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import firebase from 'firebase'
 import Api from '../services/Api'
 
 export default {
@@ -59,7 +61,9 @@ export default {
   data () {
     return {
       location: null,
+      selectedFile: null,
       user: {},
+      picture: '',
       userlocation: '',
       dialog: false,
       showPassword: false,
@@ -82,16 +86,33 @@ export default {
     Navbar
   },
   methods: {
+    onFileSelected (event) {
+      this.selectedFile = event.target.files[0]
+      this.onUpload()
+    },
+    onUpload () {
+      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFile.name}`)
+      const task = storageRef.put(this.selectedFile)
+
+      task.snapshot.ref.getDownloadURL().then((url) => {
+        this.picture = url
+        console.log(this.picture)
+      })
+    },
     update () {
+      if (this.picture === '') {
+        this.picture = this.user.img
+      }
       const updateUser = {
         name: this.user.name,
         email: this.user.email,
-        location: this.userlocation
+        location: this.userlocation,
+        img: this.picture
       }
 
       Api.updateUser(updateUser)
         .then(response => {
-          location.reload()
+          this.user = response
         })
         .catch(err => console.log(err))
     }

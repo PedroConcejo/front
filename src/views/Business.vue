@@ -3,8 +3,9 @@
     <Navbar />
     <v-row center>
       <v-col cols="6" offset="3">
-        <input type="file" @change="onFileChanged" />
-        <button @click="onUpload">Upload!</button>
+        <h2>Fotos del estilo</h2>
+      <input class="my-2" type="file"  @change="onFileSelected">
+      <input class="my-2" type="file"  @change="twoFileSelected">
       </v-col>
     </v-row>
     <v-row center>
@@ -89,6 +90,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Api from '../services/Api'
+import firebase from 'firebase'
 
 export default {
   name: 'Partner',
@@ -96,10 +98,13 @@ export default {
     return {
       categories: [],
       categoryfilter: '',
+      selectedFile: null,
+      selectedFiletwo: null,
+      picture: '',
+      picturetwo: '',
       facebook: '',
       instagram: '',
       user: {},
-      selectedFile: null,
       incluye: '',
       description: '',
       min_price: null,
@@ -110,11 +115,33 @@ export default {
     Navbar
   },
   methods: {
-    onFileChanged (event) {
+    onFileSelected (event) {
       this.selectedFile = event.target.files[0]
+      this.onUpload()
     },
     onUpload () {
-      // upload file
+      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFile.name}`)
+      const task = storageRef.put(this.selectedFile)
+
+      task.on('state_changed', () => {
+        task.snapshot.ref.getDownloadURL().then((url) => {
+          this.picture = url
+        })
+      })
+    },
+    twoFileSelected (event) {
+      this.selectedFiletwo = event.target.files[0]
+      this.twoUpload()
+    },
+    twoUpload () {
+      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFiletwo.name}`)
+      const task = storageRef.put(this.selectedFiletwo)
+
+      task.on('state_changed', () => {
+        task.snapshot.ref.getDownloadURL().then((url) => {
+          this.picturetwo = url
+        })
+      })
     },
     createStyle () {
       const newStyle = {
@@ -122,7 +149,8 @@ export default {
         content: this.incluye,
         price_min: this.min_price,
         price_max: this.max_price,
-        category: this.categoryfilter
+        category: this.categoryfilter,
+        img: [this.picture, this.picturetwo]
       }
 
       Api.createStyle(newStyle)

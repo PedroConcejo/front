@@ -40,6 +40,9 @@
                   item-text="name"
                 >
                 </v-select>
+                 <v-col cols="12" sm="6" md="4">
+              <input class="my-2" type="file"  multiple @change="onFileSelected">
+              </v-col>
               </v-col>
             </v-row>
           </v-container>
@@ -57,11 +60,14 @@
 
 <script>
 import APIServices from '../services/Api'
+import firebase from 'firebase'
 
 export default {
   data () {
     return {
       userlocation: '',
+      selectedFile: null,
+      picture: '',
       dialog: false,
       showPassword: false,
       userPassword: '',
@@ -82,12 +88,27 @@ export default {
     location: Array
   },
   methods: {
+    onFileSelected (event) {
+      this.selectedFile = event.target.files[0]
+      this.onUpload()
+    },
+    onUpload () {
+      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFile.name}`)
+      const task = storageRef.put(this.selectedFile)
+
+      task.on('state_changed', () => {
+        task.snapshot.ref.getDownloadURL().then((url) => {
+          this.picture = url
+        })
+      })
+    },
     signup () {
       const newUser = {
         name: this.username,
         email: this.email,
         password: this.userPassword,
-        location: this.userlocation
+        location: '5ea82ca9d8684d35fd02926d',
+        img: this.picture
       }
       APIServices.signup(newUser)
         .then(response => {
