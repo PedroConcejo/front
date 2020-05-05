@@ -107,7 +107,7 @@ export default {
         name: this.username,
         email: this.email,
         password: this.userPassword,
-        location: '5ea82ca9d8684d35fd02926d',
+        location: this.userlocation,
         img: this.picture
       }
       APIServices.signup(newUser)

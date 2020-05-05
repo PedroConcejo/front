@@ -224,5 +224,14 @@ export default {
       }
     })
     return response.data
+  },
+  async changePassword (newPassword) {
+    const response = await API.put('/me/profile/password', { ...newPassword },
+      {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+    return response.data
   }
 }

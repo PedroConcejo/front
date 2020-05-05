@@ -9,22 +9,35 @@
         <v-card-text>
           <v-container>
             <v-row justify="center">
-              <v-col cols="12"  sm="7" justify="center">
-              <v-avatar color="orange" size="100">
-               <img :src="user.img"
-      >
-               </v-avatar> <v-spacer></v-spacer>
-                <input class="my-2" type="file"  multiple @change="onFileSelected">
+              <v-col cols="12" sm="7" justify="center">
+                <v-avatar color="orange" size="100">
+                  <img :src="user.img" />
+                </v-avatar>
+                <v-spacer></v-spacer>
+                <input
+                  class="my-2"
+                  type="file"
+                  multiple
+                  @change="onFileSelected"
+                />
               </v-col>
               <v-col cols="12" sm="7">
-                <v-text-field label="Name*" v-model="user.name"
-            prepend-icon="mdi-account-circle"
-            :rules="userRules" required></v-text-field>
+                <v-text-field
+                  label="Name*"
+                  v-model="user.name"
+                  prepend-icon="mdi-account-circle"
+                  :rules="userRules"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" sm="7">
-                <v-text-field label="Email*"  v-model="user.email"
-            :rules="emailRules"
-            prepend-icon="mdi-email" required></v-text-field>
+                <v-text-field
+                  label="Email*"
+                  v-model="user.email"
+                  :rules="emailRules"
+                  prepend-icon="mdi-email"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" sm="7">
                 <v-select
@@ -38,21 +51,26 @@
                 >
                 </v-select>
               </v-col>
+              <v-col cols="12" sm="7">
+          <v-btn class="ma-2" outlined rounded color="black" @click="update">Update</v-btn>
+              </v-col>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
+
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="update">Update</v-btn>
+          <Password />
         </v-card-actions>
       </v-card>
-      </v-row>
+    </v-row>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Password from '@/components/Password.vue'
 import firebase from 'firebase'
 import Api from '../services/Api'
 
@@ -83,7 +101,8 @@ export default {
     }
   },
   components: {
-    Navbar
+    Navbar,
+    Password
   },
   methods: {
     onFileSelected (event) {
