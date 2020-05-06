@@ -50,8 +50,8 @@ export default {
     this.categories = ['Todos los estilos', ...categories]
 
     const locations = await api.getAllLocations()
-    this.locations = ['Todas las Localizaciones', ...locations]
-
+    this.location = ['Todas las Localizaciones', ...locations]
+    console.log(this.locations)
     this.partners = await api.getAllByStyles()
   }
 }
