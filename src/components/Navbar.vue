@@ -11,10 +11,10 @@
               <v-btn icon color="#ECEFF1" @click="back">
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
-              <v-btn v-if="isPartner" icon color="#ECEFF1" href="/business/styles">
+              <v-btn v-if="isPartner" icon color="#ECEFF1" @click="business">
                 <v-icon>mdi-briefcase</v-icon>
               </v-btn>
-              <v-btn icon color="#ECEFF1" href="/">
+              <v-btn icon color="#ECEFF1" @click="home">
                 <v-icon>mdi-home</v-icon>
               </v-btn>
             </v-col>
@@ -26,20 +26,20 @@ Recuerdos
               >
             </v-col>
             <v-col class="text-end">
-               <v-btn icon color="#ECEFF1"  href="/favorites">
+               <v-btn icon color="#ECEFF1" @click="favorites">
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
-              <v-btn icon color="#ECEFF1" href="/ratings">
+              <v-btn icon color="#ECEFF1" @click="ratings">
                 <v-icon>mdi-star</v-icon>
               </v-btn>
-              <v-btn v-if="isPartner" icon color="#ECEFF1" href="/messages/partner">
+              <v-btn v-if="isPartner" icon color="#ECEFF1" @click="messagespartner">
                 <v-icon>mdi-email</v-icon>
               </v-btn>
-              <v-btn v-else icon color="#ECEFF1" href="/messages">
+              <v-btn v-else icon color="#ECEFF1" @click="messages">
                 <v-icon>mdi-email</v-icon>
               </v-btn>
 
-              <v-btn icon color="#ECEFF1" href="/profile">
+              <v-btn icon color="#ECEFF1" @click="profile">
                 <v-icon>mdi-account</v-icon>
               </v-btn>
 
@@ -108,6 +108,27 @@ export default {
     },
     back () {
       this.$router.go(-1)
+    },
+    profile () {
+      this.$router.push('/profile')
+    },
+    messages () {
+      this.$router.push('/messages')
+    },
+    messagespartner () {
+      this.$router.push('/messages/partner')
+    },
+    ratings () {
+      this.$router.push('/ratings')
+    },
+    favorites () {
+      this.$router.push('/favorites')
+    },
+    home () {
+      this.$router.push('/')
+    },
+    business () {
+      this.$router.push('/business/styles')
     }
   }
 }

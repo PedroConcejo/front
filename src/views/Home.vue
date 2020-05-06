@@ -51,7 +51,6 @@ export default {
 
     const locations = await api.getAllLocations()
     this.location = ['Todas las Localizaciones', ...locations]
-    console.log(this.locations)
     this.partners = await api.getAllByStyles()
   }
 }
