@@ -20,7 +20,7 @@
             </v-col>
             <v-col>
               <v-toolbar-title>
-                <v-btn href="/" text class="brand font-weight-black text-center">
+                <v-btn  @click="home" text class="brand font-weight-black text-center">
 Recuerdos
 </v-btn></v-toolbar-title
               >
@@ -57,7 +57,7 @@ Recuerdos
             </v-col>
             <v-col>
               <v-toolbar-title>
-                 <v-btn href="/" text class="brand font-weight-black text-center">
+                 <v-btn  @click="home" text class="brand font-weight-black text-center">
 Recuerdos
 </v-btn></v-toolbar-title
               >
