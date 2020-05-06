@@ -21,6 +21,7 @@
             readonly
             half-increments
           ></v-rating>
+          <v-btn outlined color="teal" href="/business"><v-icon>mdi-table-edit</v-icon>Añadir estilo</v-btn>
         </h2>
 
         <v-tabs v-model="tab" background-color="teal lighten-3">
