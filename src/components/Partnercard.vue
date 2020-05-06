@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mr-10 mt-10" max-width="400" elevation="9">
+  <v-card class="mr-10 mt-10" max-width="400" elevation="9" v-if="!loading">
     <v-carousel :show-arrows="false">
       <v-carousel-item
         v-for="(img, idx) in partner.img"
@@ -54,15 +54,12 @@ export default {
     return {
       rate: 0,
       favorites: [],
-      fav: 0
-
+      fav: 0,
+      loading: true
     }
   },
   props: {
     partner: Object
-  },
-  computed: {
-
   },
   methods: {
     ver (id) {
@@ -83,18 +80,21 @@ export default {
       }
     }
   },
-  async created () {
-    const ratings = await Api.getPartnerRatings(this.partner.user._id)
-    if (ratings.length !== 0) {
-      this.rate = ratings.reduce((prev, cur) => {
-        return prev + cur.rate
-      }, 0) / ratings.length
-    }
-    this.favorites = await Api.getMyFav()
-    if (this.favorites.includes(this.partner._id)) {
-      this.fav = 1
-    } else {
-      this.fav = 0
+  async mounted () {
+    if (this.partner && this.partner.user) {
+      const ratings = await Api.getPartnerRatings(this.partner.user._id)
+      if (ratings.length !== 0) {
+        this.rate = ratings.reduce((prev, cur) => {
+          return prev + cur.rate
+        }, 0) / ratings.length
+      }
+      this.favorites = await Api.getMyFav()
+      if (this.favorites.includes(this.partner._id)) {
+        this.fav = 1
+      } else {
+        this.fav = 0
+      }
+      this.loading = false
     }
   }
 }

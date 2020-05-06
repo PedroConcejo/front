@@ -2,12 +2,11 @@
   <div class="home">
     <Navbar :location="location" />
     <v-row>
-<v-col cols='3'>
+      <v-col cols='3'>
         <Vertical :categories="categories" :location="location" v-on:search='search'/>
       </v-col>
       <v-col cols="9" class="d-flex flex-wrap mx-auto">
-    <Partnerlist :partners="partners" class="b" />
-
+        <Partnerlist :partners="partners" class="b" />
       </v-col>
     </v-row>
   </div>
@@ -24,9 +23,9 @@ export default {
   name: 'Home',
   data () {
     return {
-      categories: null,
-      location: null,
-      partners: null,
+      categories: [],
+      location: [],
+      partners: [],
       categoryfilter: '',
       locationfilter: ''
     }
@@ -42,30 +41,18 @@ export default {
         locationfilter === 'Todas las Localizaciones'
           ? ''
           : locationfilter
-      const style =
-        categoryfilter === 'Todos los estilos' ? '' : categoryfilter
-      const all = await api.getAllByStyles(user, location, style)
-      return (this.partners = all)
-    },
-    async getAllCategories () {
-      const all = await api.getAllCategories()
-      all.unshift('Todos los estilos')
-      return (this.categories = all)
-    },
-    async getAllLocations () {
-      const all = await api.getAllLocations()
-      all.unshift('Todas las Localizaciones')
-      return (this.location = all)
-    },
-    async getAllByStyles () {
-      const all = await api.getAllByStyles()
-      return (this.partners = all)
+      const style = categoryfilter === 'Todos los estilos' ? '' : categoryfilter
+      this.partners = await api.getAllByStyles(user, location, style)
     }
   },
-  mounted () {
-    this.getAllCategories()
-    this.getAllLocations()
-    this.getAllByStyles()
+  async created () {
+    const categories = await api.getAllCategories()
+    this.categories = ['Todos los estilos', ...categories]
+
+    const locations = await api.getAllLocations()
+    this.locations = ['Todas las Localizaciones', ...locations]
+
+    this.partners = await api.getAllByStyles()
   }
 }
 </script>

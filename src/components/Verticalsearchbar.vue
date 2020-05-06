@@ -41,10 +41,6 @@
           color='teal'
         ></v-select>
       </v-container>
-
-      <v-container fluid>
-        <p>Character:</p>
-      </v-container>
     </v-list>
   </v-card>
 </template>
