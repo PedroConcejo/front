@@ -9,6 +9,7 @@ import Business from '../views/Business.vue'
 import BusinessStyles from '../views/Showstyles.vue'
 import StylesById from '../views/StylesById.vue'
 import Favorites from '../views/Favorites.vue'
+import Messagespartner from '../views/Messagespartner.vue'
 
 Vue.use(VueRouter)
 
@@ -92,6 +93,23 @@ const routes = [
     path: '/business/styles',
     name: 'BusinessStyles',
     component: BusinessStyles,
+    beforeEnter (to, from, next) {
+      if (!localStorage.getItem('token')) {
+        next({
+          name: 'Home'
+        })
+      }
+      if (localStorage.getItem('role') !== 'partner') {
+        next({
+          name: 'Home'
+        })
+      } else { next() }
+    }
+  },
+  {
+    path: '/messages/partner',
+    name: 'Messagespartner',
+    component: Messagespartner,
     beforeEnter (to, from, next) {
       if (!localStorage.getItem('token')) {
         next({

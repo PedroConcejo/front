@@ -32,7 +32,10 @@ Recuerdos
               <v-btn icon color="#ECEFF1" href="/ratings">
                 <v-icon>mdi-star</v-icon>
               </v-btn>
-              <v-btn icon color="#ECEFF1" href="/messages">
+              <v-btn v-if="isPartner" icon color="#ECEFF1" href="/messages/partner">
+                <v-icon>mdi-email</v-icon>
+              </v-btn>
+              <v-btn v-else icon color="#ECEFF1" href="/messages">
                 <v-icon>mdi-email</v-icon>
               </v-btn>
 

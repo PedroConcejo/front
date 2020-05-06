@@ -233,5 +233,13 @@ export default {
         }
       })
     return response.data
+  },
+  async getPartnerRooms () {
+    const response = await API.get('/me/rooms/partner', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }

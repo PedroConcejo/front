@@ -13,12 +13,12 @@
                 @click="message(item._id)"
               >
                 <v-avatar color="orange" size="20">
-                  <img :src="item.partner.img" />
+                  <img :src="item.user.img" />
                 </v-avatar>
 
                 <v-list-item-content>
                   <v-list-item-title
-                    v-text="item.partner.name"
+                    v-text="item.user.name"
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -145,8 +145,8 @@ export default {
     }
   },
   methods: {
-    async getMyRooms () {
-      const all = await Api.getMyRooms()
+    async getPartnerRooms () {
+      const all = await Api.getPartnerRooms()
       return (this.rooms = all)
     },
     async message (id) {
@@ -172,7 +172,7 @@ export default {
     }
   },
   mounted () {
-    this.getMyRooms()
+    this.getPartnerRooms()
   }
 }
 </script>
