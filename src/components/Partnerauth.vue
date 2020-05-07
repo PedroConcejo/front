@@ -40,6 +40,10 @@
             </v-row>
           </v-container>
           <small>*indicates required field</small>
+           <v-spacer></v-spacer>
+          <v-alert type="error" :value="alert">
+      Wrong password.
+    </v-alert>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -120,6 +124,7 @@ export default {
   data () {
     return {
       userlocation: '',
+      alert: false,
       selectedFile: null,
       picture: '',
       dialog: false,
@@ -185,10 +190,12 @@ export default {
         .then(response => {
           if (response.error) {
             console.log(response.error)
+            this.alert = true
           } else {
             localStorage.setItem('token', response.token)
             localStorage.setItem('role', response.role)
             this.dialog = false
+            this.alert = false
             this.$router.push('/business/styles')
           }
         })

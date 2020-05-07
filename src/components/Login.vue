@@ -36,6 +36,10 @@
             </v-row>
           </v-container>
           <small>*indicates required field</small>
+          <v-spacer></v-spacer>
+          <v-alert type="error" :value="alert">
+      Wrong password.
+    </v-alert>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -56,6 +60,7 @@ export default {
   data () {
     return {
       dialog: false,
+      alert: false,
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
@@ -80,9 +85,11 @@ export default {
         .then(response => {
           if (response.error) {
             console.log(response.error)
+            this.alert = true
           } else {
             localStorage.setItem('token', response.token)
             localStorage.setItem('role', response.role)
+            this.alert = false
             location.reload()
           }
         })
