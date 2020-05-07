@@ -41,7 +41,7 @@
                 >
                 </v-select>
                  <v-col cols="12" sm="6" md="4">
-              <input class="my-2" type="file"  accept="image/*" @change="onFileSelected">
+              <input class="my-2" type="file" accept="image/*" @change="onFileSelected">
               </v-col>
               </v-col>
             </v-row>

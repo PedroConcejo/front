@@ -17,7 +17,7 @@
                 <input
                   class="my-2"
                   type="file"
-                  multiple
+                  accept="image/*"
                   @change="onFileSelected"
                 />
               </v-col>
@@ -107,20 +107,33 @@ export default {
   methods: {
     onFileSelected (event) {
       this.selectedFile = event.target.files[0]
-      this.onUpload()
     },
-    onUpload () {
-      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFile.name}`)
-      const task = storageRef.put(this.selectedFile)
-
-      task.snapshot.ref.getDownloadURL().then((url) => {
-        this.picture = url
-        console.log(this.picture)
+    uploadImage () {
+      return new Promise(resolve => {
+        var storageRef = firebase.storage().ref()
+        var metadata = {
+          contentType: 'image/jpeg'
+        }
+        var uploadTask = storageRef
+          .child('images/' + this.selectedFile.name)
+          .put(this.selectedFile, metadata)
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {},
+          error => console.log(error),
+          async function () {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL()
+            resolve(downloadURL)
+          }
+        )
       })
     },
-    update () {
-      if (this.picture === '') {
+    async update () {
+      if (this.selectedFile === null) {
         this.picture = this.user.img
+      } else {
+        const imgURL = await this.uploadImage()
+        this.picture = imgURL
       }
       const updateUser = {
         name: this.user.name,
