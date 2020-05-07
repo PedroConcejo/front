@@ -4,8 +4,8 @@
     <v-row center>
       <v-col cols="6" offset="3">
         <h2>Fotos del estilo</h2>
-      <input class="my-2" type="file"  @change="onFileSelected">
-      <input class="my-2" type="file"  @change="twoFileSelected">
+      <input class="my-2" type="file" accept="image/*" @change="onFileSelected">
+      <input class="my-2" type="file" accept="image/*" @change="twoFileSelected">
       </v-col>
     </v-row>
     <v-row center>
@@ -117,33 +117,55 @@ export default {
   methods: {
     onFileSelected (event) {
       this.selectedFile = event.target.files[0]
-      this.onUpload()
     },
-    onUpload () {
-      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFile.name}`)
-      const task = storageRef.put(this.selectedFile)
-
-      task.on('state_changed', () => {
-        task.snapshot.ref.getDownloadURL().then((url) => {
-          this.picture = url
-        })
+    uploadImage () {
+      return new Promise(resolve => {
+        var storageRef = firebase.storage().ref()
+        var metadata = {
+          contentType: 'image/jpeg'
+        }
+        var uploadTask = storageRef
+          .child('images/' + this.selectedFile.name)
+          .put(this.selectedFile, metadata)
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {},
+          error => console.log(error),
+          async function () {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL()
+            resolve(downloadURL)
+          }
+        )
       })
     },
     twoFileSelected (event) {
       this.selectedFiletwo = event.target.files[0]
-      this.twoUpload()
     },
     twoUpload () {
-      const storageRef = firebase.storage().ref(`imagenes/${this.selectedFiletwo.name}`)
-      const task = storageRef.put(this.selectedFiletwo)
-
-      task.on('state_changed', () => {
-        task.snapshot.ref.getDownloadURL().then((url) => {
-          this.picturetwo = url
-        })
+      return new Promise(resolve => {
+        var storageRef = firebase.storage().ref()
+        var metadata = {
+          contentType: 'image/jpeg'
+        }
+        var uploadTask = storageRef
+          .child('images/' + this.selectedFiletwo.name)
+          .put(this.selectedFiletwo, metadata)
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {},
+          error => console.log(error),
+          async function () {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL()
+            resolve(downloadURL)
+          }
+        )
       })
     },
-    createStyle () {
+    async createStyle () {
+      const imgURL = await this.uploadImage()
+      this.picture = imgURL
+      const imgURLtwo = await this.twoUpload()
+      this.picturetwo = imgURLtwo
       const newStyle = {
         description: this.description,
         content: this.incluye,
