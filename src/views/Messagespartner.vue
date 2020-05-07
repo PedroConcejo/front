@@ -158,10 +158,14 @@ export default {
       const message = {
         msg: this.newmsg
       }
+      const id = this.msg[0].room.user
       await Api.newMsn(this.roomid, message)
         .then(response => {
           this.msg.push(response)
           this.newmsg = ''
+          Api.newmsg(id)
+            .then(response => { })
+            .catch(err => console.log(err))
         })
         .catch(err => console.log(err))
     },
