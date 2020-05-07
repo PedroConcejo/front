@@ -33,10 +33,25 @@ Recuerdos
                 <v-icon>mdi-star</v-icon>
               </v-btn>
               <v-btn v-if="isPartner" icon color="#ECEFF1" @click="messagespartner">
+                 <v-badge
+        :content="user.msg"
+        :value="user.msg"
+        color="red"
+        overlap
+      >
                 <v-icon>mdi-email</v-icon>
+                </v-badge>
               </v-btn>
               <v-btn v-else icon color="#ECEFF1" @click="messages">
+                <v-badge
+        :content="user.msg"
+        :value="user.msg"
+        color="red"
+        overlap
+      >
                 <v-icon>mdi-email</v-icon>
+                </v-badge>
+
               </v-btn>
 
               <v-btn icon color="#ECEFF1" @click="profile">
@@ -80,9 +95,15 @@ Recuerdos
 import Partnerauth from '@/components/Partnerauth.vue'
 import Login from '@/components/Login.vue'
 import Signup from '@/components/Signup.vue'
+import Api from '../services/Api'
 
 export default {
   name: 'Home',
+  data () {
+    return {
+      user: {}
+    }
+  },
   props: {
     location: Array
   },
@@ -114,9 +135,11 @@ export default {
     },
     messages () {
       this.$router.push('/messages')
+      this.user = Api.clearmsg()
     },
     messagespartner () {
       this.$router.push('/messages/partner')
+      this.user = Api.clearmsg()
     },
     ratings () {
       this.$router.push('/ratings')
@@ -130,6 +153,9 @@ export default {
     business () {
       this.$router.push('/business/styles')
     }
+  },
+  async mounted () {
+    this.user = await Api.getMe()
   }
 }
 </script>

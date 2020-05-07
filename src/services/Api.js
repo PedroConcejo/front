@@ -241,5 +241,21 @@ export default {
       }
     })
     return response.data
+  },
+  async newmsg (id) {
+    const response = await API.put(`/me/profile/newmsg/${id}`, {}, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
+  },
+  async clearmsg () {
+    const response = await API.put('/me/profile/clearmsg', {}, {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    return response.data
   }
 }
