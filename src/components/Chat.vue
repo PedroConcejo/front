@@ -151,4 +151,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.msg {
+  background-color: #90ee90;
+    border-radius: 10px;
+}
+</style>

@@ -166,15 +166,19 @@ export default {
         subject: this.subject,
         partner: this.$route.params.partnerid
       }
+      const id = this.$route.params.partnerid
       Api.startRoom(room)
         .then(response => {
           const mensaje = {
             msg: this.formulario
           }
           Api.newMsn(response._id, mensaje)
-            .then(response => { this.dialog = false })
+            .then(response => { })
             .catch(err => console.log(err))
         })
+        .catch(err => console.log(err))
+      Api.newmsg(id)
+        .then(response => { this.dialog = false })
         .catch(err => console.log(err))
     }
   },
