@@ -1,9 +1,11 @@
 <template>
   <div cols="12" sm="8" md="7" lg="5">
     <Navbar />
+    <row>
+    <div id="ratings" max-width="400" cols="8" offset="2">
   <v-card v-for='(rating, idx) in ratings' :key='idx'
-     class="d-flex flex-wrap mx-auto ma-5"
     outlined
+    class="mr-10 mt-10"
     rounded
       border="left"
       elevation="5"
@@ -37,6 +39,8 @@
                     </v-btn>
   </v-card>
   </div>
+  </row>
+  </div>
 </template>
 
 <script>
@@ -69,3 +73,13 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+#ratings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+</style>

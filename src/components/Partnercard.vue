@@ -58,6 +58,11 @@ export default {
       loading: true
     }
   },
+  computed: {
+    isToken: function () {
+      return !!localStorage.getItem('token')
+    }
+  },
   props: {
     partner: Object
   },
@@ -88,11 +93,13 @@ export default {
           return prev + cur.rate
         }, 0) / ratings.length
       }
-      this.favorites = await Api.getMyFav()
-      if (this.favorites.includes(this.partner._id)) {
-        this.fav = 1
-      } else {
-        this.fav = 0
+      if (this.isToken) {
+        this.favorites = await Api.getMyFav()
+        if (this.favorites.includes(this.partner._id)) {
+          this.fav = 1
+        } else {
+          this.fav = 0
+        }
       }
       this.loading = false
     }
