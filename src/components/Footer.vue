@@ -6,7 +6,7 @@
     <v-card
     color="teal lighten-3
 "
-      class="flex"
+      class="d-flex"
       flat
       tile
     >
