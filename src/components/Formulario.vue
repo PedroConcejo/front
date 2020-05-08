@@ -144,6 +144,7 @@ export default {
         subject: this.subject,
         partner: this.$route.params.partnerid
       }
+      const id = this.$route.params.partnerid
 
       Api.signup(newUser)
         .then(response => {
@@ -154,7 +155,11 @@ export default {
                 msg: this.formulario
               }
               Api.newMsn(response._id, mensaje)
-                .then(response => { this.dialog = false })
+                .then(response => {
+                  Api.newmsg(id)
+                    .then(response => { this.dialog = false })
+                    .catch(err => console.log(err))
+                })
                 .catch(err => console.log(err))
             })
             .catch(err => console.log(err))
@@ -173,12 +178,13 @@ export default {
             msg: this.formulario
           }
           Api.newMsn(response._id, mensaje)
-            .then(response => { })
+            .then(response => {
+              Api.newmsg(id)
+                .then(response => { this.dialog = false })
+                .catch(err => console.log(err))
+            })
             .catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
-      Api.newmsg(id)
-        .then(response => { this.dialog = false })
         .catch(err => console.log(err))
     }
   },
